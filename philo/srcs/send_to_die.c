@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   send_to_die.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/21 16:55:50 by dhomem-d          #+#    #+#             */
-/*   Updated: 2022/07/18 19:08:34 by duartebaeta      ###   ########.fr       */
+/*   Created: 2022/07/19 14:29:10 by duartebaeta       #+#    #+#             */
+/*   Updated: 2022/07/19 14:34:56 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/philo.h"
 
-int	ft_isdigit(int c)
+void	send_to_die(t_rules *rules, t_philo *philo)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
+
 }

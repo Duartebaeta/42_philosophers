@@ -10,7 +10,9 @@ PATH_LIBFT		:= ./libft
 PATH_INCLUDES	:= ./includes
 #Getting all the .c files and turning them into .o files
 BIN				:= ./$(NAME)
-SRCS			:= $(PATH_SRC)/main.c
+SRCS			:= $(PATH_SRC)/main.c \
+					$(PATH_SRC)/utils.c \
+					$(PATH_SRC)/simulation.c
 
 OBJ				:= $(subst .c,.o,$(subst $(PATH_SRC), $(PATH_OBJS), $(SRCS)))
 LIBFT			:= $(PATH_LIBFT)/libft.a
