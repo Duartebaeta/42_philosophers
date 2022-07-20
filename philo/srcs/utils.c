@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 20:37:28 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/20 16:02:50 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/20 16:51:36 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	check_meals(t_rules *rules)
 	int	i;
 
 	i = 0;
+	if (rules->opt_eat == -1)
+		return (EXIT_SUCCESS);
 	while (i < rules->n_philo)
 	{
 		if (rules->philos[i].times_ate < rules->opt_eat)

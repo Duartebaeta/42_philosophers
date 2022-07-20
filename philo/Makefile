@@ -1,7 +1,7 @@
 NAME := philo
 #Compiling
 CC				:= gcc
-CFLAGS			:= -Wall -Wextra -Werror
+CFLAGS			:= -Wall -Wextra -Werror -g
 #Paths
 PATH_BUILD		:= ./build
 PATH_SRC		:= ./srcs
