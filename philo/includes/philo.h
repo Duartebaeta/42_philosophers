@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:08:42 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/19 14:52:40 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/20 15:54:56 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ typedef struct s_rules
 	int				died;
 	long			first_time;
 	struct s_philo	*philos;
-	pthread_t	*threads;
+	pthread_t		*threads;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	increment;
-	pthread_mutex_t	writing;
+	pthread_mutex_t	death;
+	pthread_mutex_t	meals_left;
 } t_rules;
 
 typedef struct s_philo
@@ -50,18 +51,28 @@ typedef struct s_philo
 
 
 long	get_time();
-int	arg_checker(int argc, char **argv);
-int	init_all(char **argv, t_rules *rules);
-int	init_philo(t_rules *rules);
-int	init_mut(t_rules *rules);
-int	simulator(t_rules *rules);
+int		arg_checker(int argc, char **argv);
+int		init_all(char **argv, t_rules *rules);
+int		init_philo(t_rules *rules);
+int		init_mut(t_rules *rules);
+int		simulator(t_rules *rules);
 void	print_big(char **big);
-int	start_threads(t_rules *rules);
+int		start_threads(t_rules *rules);
 void *	start_simulation(void *r);
-int	join_threads(t_rules *rules);
-int	start_taking_forks(t_rules *rules, t_philo *philo);
-int	start_eating(t_philo *philo);
-int	check_time_eat(t_rules *rules, t_philo *philo);
+int		join_threads(t_rules *rules);
+int		start_taking_forks(t_rules *rules, t_philo *philo);
+int		start_eating(t_rules *rules, t_philo *philo);
+int		check_time_eat(t_rules *rules, t_philo *philo);
 long	get_time_since_last(t_philo *philo, t_rules *rules);
+int		print_status(t_rules *rules, t_philo *philo, char *message);
+long	get_simu_time(t_rules *rules);
+int		release_fork(t_rules *rules, int fork_id);
+int		send_to_die(t_rules *rules, t_philo *philo);
+int		start_sleeping(t_rules *rules, t_philo *philo);
+int		start_thinking(t_rules *rules, t_philo *philo);
+int		release_both_forks(t_rules *rules, t_philo *philo);
+long	get_time_until_death(t_rules *rules, t_philo *philo);
+int		check_print(t_rules *rules);
+int		check_meals(t_rules *rules);
 
 #endif

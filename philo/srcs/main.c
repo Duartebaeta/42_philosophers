@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:21:46 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/19 14:48:48 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/19 19:12:20 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	init_mut(t_rules *rules)
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 			return (1);
 	}
-	if (pthread_mutex_init(&(rules->writing), NULL))
+	if (pthread_mutex_init(&(rules->death), NULL))
 		return (1);
 	if (pthread_mutex_init(&(rules->increment), NULL))
+		return (1);
+	if (pthread_mutex_init(&(rules->meals_left), NULL))
 		return (1);
 	return (0);
 }
