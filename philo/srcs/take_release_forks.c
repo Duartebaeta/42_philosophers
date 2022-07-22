@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 18:08:23 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/20 16:03:42 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/22 15:57:41 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	check_time_eat(t_rules *rules, t_philo *philo)
 {
-	if (rules->time_die <= rules->time_eat  || rules->time_die <= get_time_since_last(philo, rules))
+	if (rules->time_die <= rules->time_eat  || get_time_since_last(philo, rules) >= rules->time_die || rules->n_philo == 1)
+	{
+		send_to_die(rules, philo);
 		return (EXIT_FAILURE);
-	else if (rules->n_philo == 1)
-		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -44,8 +45,7 @@ int	second_fork(t_rules *rules, t_philo *philo)
 	}
 	if (print_status(rules, philo, "has taken a fork") == EXIT_FAILURE)
 	{
-		release_fork(rules, philo->left_fork_id);
-		release_fork(rules, philo->right_fork_id);
+		release_both_forks(rules, philo);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -70,17 +70,10 @@ int	release_both_forks(t_rules *rules, t_philo *philo)
 int	start_taking_forks(t_rules *rules, t_philo *philo)
 {
 	if (check_time_eat(rules, philo) == EXIT_FAILURE)
-	{
-		send_to_die(rules, philo);
 		return (EXIT_FAILURE);
-	}
 	if (first_fork(rules, philo) == EXIT_FAILURE)
-	{
 		return (EXIT_FAILURE);
-	}
 	if (second_fork(rules, philo) == EXIT_FAILURE)
-	{
 		return (EXIT_FAILURE);
-	}
 	return (EXIT_SUCCESS);
 }

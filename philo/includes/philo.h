@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:08:42 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/20 15:54:56 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/22 16:09:40 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_philo
 	int					left_fork_id;
 	int					right_fork_id;
 	long				last_meal;
+	long				last_sleep_time;
 	int					times_ate;
 	struct s_rules		*rules;
 	pthread_t			thread_id;
@@ -72,7 +73,10 @@ int		start_sleeping(t_rules *rules, t_philo *philo);
 int		start_thinking(t_rules *rules, t_philo *philo);
 int		release_both_forks(t_rules *rules, t_philo *philo);
 long	get_time_until_death(t_rules *rules, t_philo *philo);
-int		check_print(t_rules *rules);
 int		check_meals(t_rules *rules);
+int		test_init(t_rules *rules);
+int		destroy_mut(t_rules *rules);
+int		free_mem(t_rules *rules);
+void	anti_deadlock(t_rules *rules, t_philo *philo);
 
 #endif

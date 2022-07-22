@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:21:46 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/19 19:12:20 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/22 16:09:58 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ int	init_mut(t_rules *rules)
 	return (0);
 }
 
+void	anti_deadlock(t_rules *rules, t_philo *philo)
+{
+	if (philo->id % 2)
+	{
+		philo->left_fork_id = philo->id;
+		philo->right_fork_id = (philo->id + 1) % rules->n_philo;
+	}
+	else
+	{
+		philo->left_fork_id = (philo->id + 1) % rules->n_philo;
+		philo->right_fork_id = philo->id;
+	}
+}
+
 int	init_philo(t_rules *rules)
 {
 	int i;
@@ -53,10 +67,19 @@ int	init_philo(t_rules *rules)
 	while (--i >= 0)
 	{
 		rules->philos[i].id = i;
-		rules->philos[i].left_fork_id = i;
-		rules->philos[i].right_fork_id = (i + 1) % rules->n_philo;
+		if (rules->philos[i].id % 2)
+		{
+			rules->philos[i].left_fork_id = rules->philos[i].id;
+			rules->philos[i].right_fork_id = (rules->philos[i].id + 1) % rules->n_philo;
+		}
+		else
+		{
+			rules->philos[i].left_fork_id = (rules->philos[i].id + 1) % rules->n_philo;
+			rules->philos[i].right_fork_id = rules->philos[i].id;
+		}
 		rules->philos[i].times_ate = 0;
 		rules->philos[i].last_meal = 0;
+		rules->philos[i].last_sleep_time = 0;
 		rules->philos[i].rules = rules;
 	}
 	return (0);
@@ -83,19 +106,30 @@ int	init_all(char **argv, t_rules *rules)
 	return (0);
 }
 
+int	test_init(t_rules *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->n_philo)
+	{
+		printf("Philo %d, left-id: %d right-id: %d\n", rules->philos[i].id, rules->philos[i].left_fork_id, rules->philos[i].right_fork_id);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int main(int argc, char **argv)
 {
 	t_rules	*rules;
 
 	if (arg_checker(argc, argv))
 		return (2);
-	printf("valid args\n");
 	rules = (t_rules *)malloc(sizeof(t_rules));
 	if (!rules)
 		return (3);
 	if (init_all(argv, rules))
 		return (4);
-	printf("valid init\n");
 	simulator(rules);
 	return 0;
 }

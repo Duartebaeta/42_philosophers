@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 20:37:28 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/20 16:51:36 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/22 15:27:15 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_meals(t_rules *rules)
 
 	i = 0;
 	if (rules->opt_eat == -1)
-		return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	while (i < rules->n_philo)
 	{
 		if (rules->philos[i].times_ate < rules->opt_eat)
@@ -94,44 +94,16 @@ int	check_meals(t_rules *rules)
 	return (EXIT_SUCCESS);
 }
 
-int	check_print(t_rules *rules)
-{
-	if (rules->died == 1)
-	{
-		return (EXIT_FAILURE);
-	}
-	if (check_meals(rules) == EXIT_FAILURE)
-	{
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	print_status(t_rules *rules, t_philo *philo, char *message)
 {
-	int	message_buffer;
-	char	*final_print;
-
-	message_buffer = 60;
 	pthread_mutex_lock(&rules->death);
-	pthread_mutex_lock(&rules->meals_left);
-	if (check_print(rules) == EXIT_FAILURE)
+	if (rules->died == 1 || check_time_eat(rules, philo) == EXIT_FAILURE)
 	{
 		pthread_mutex_unlock(&rules->meals_left);
 		pthread_mutex_unlock(&rules->death);
 		return (EXIT_FAILURE);
 	}
-	final_print = ft_calloc(message_buffer, sizeof(char));
-	if (final_print == NULL)
-		return (EXIT_FAILURE);
-	ft_strlcat(final_print, ft_itoa(get_simu_time(rules)), message_buffer);
-	ft_strlcat(final_print, " ", message_buffer);
-	ft_strlcat(final_print, ft_itoa(philo->id), message_buffer);
-	ft_strlcat(final_print, " ", message_buffer);
-	ft_strlcat(final_print, message, message_buffer);
-	ft_printf("%s\n", final_print);
-	free(final_print);
-	pthread_mutex_unlock(&rules->meals_left);
+	printf("%s %d %s\n", ft_itoa(get_simu_time(rules)), philo->id, message);
 	pthread_mutex_unlock(&rules->death);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: duartebaeta <duartebaeta@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 14:29:10 by duartebaeta       #+#    #+#             */
-/*   Updated: 2022/07/20 16:21:37 by duartebaeta      ###   ########.fr       */
+/*   Updated: 2022/07/22 15:38:36 by duartebaeta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	send_to_die(t_rules *rules, t_philo *philo)
 	pthread_mutex_lock(&rules->death);
 	rules->died = 1;
 	pthread_mutex_unlock(&rules->death);
+	// exit(0);
 	return (EXIT_SUCCESS);
 }
